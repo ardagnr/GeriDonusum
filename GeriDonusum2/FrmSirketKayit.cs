@@ -14,33 +14,44 @@ namespace GeriDonusum2
 {
     public partial class FrmSirketKayit : Form
     {
-        private GeriDonusumContext _context;
+        private GeriDonusumDbContext _context;
         public FrmSirketKayit()
         {
             InitializeComponent();
-            _context = new GeriDonusumContext();
+            _context = new GeriDonusumDbContext();
         }
 
         private void btn_kayit_Click(object sender, EventArgs e)
         {
             try
             {
-
-                using (var context = new GeriDonusumContext())
+                using (var context = new GeriDonusumDbContext())
                 {
-                    var sirket = context.Sirketler.FirstOrDefault(s => s.sirket_adi == txt_SirketAdi.Text);
+                    string secilenPozisyonAdi = cmb_pozisyon.Text;
+
+                    var sirket = context.Sirketler.FirstOrDefault(s => s.sirket_adi == cmb_sirketadi.Text);
+
+                    if (sirket == null)
+                    {
+ 
+                        sirket = new Sirketler { sirket_adi = cmb_sirketadi.Text };
+                        context.Sirketler.Add(sirket);
+                        context.SaveChanges(); 
+                    }
+
+                    var pozisyon = context.Pozisyonlar.FirstOrDefault(p => p.pozisyon_adi == secilenPozisyonAdi);
 
                     var yeniEleman = new Elemanlar
                     {
                         eleman_adi = txt_ad.Text,
-                        pozisyon = txt_pozisyon.Text,
+                        pozisyon_id = pozisyon != null ? pozisyon.pozisyon_id : 0,
                         sirket_id = sirket.sirket_id,
-                        eleman_telefon =msk_telno.Text,
+                        eleman_telefon = msk_telno.Text,
                         sifre = txt_sifre.Text
                     };
 
-                    _context.Elemanlar.Add(yeniEleman);
-                    _context.SaveChanges();
+                    context.Elemanlar.Add(yeniEleman);
+                    context.SaveChanges();
                 }
 
                 MessageBox.Show("Kaydınız Başarıyla Gerçekleşmiştir!!!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -53,11 +64,50 @@ namespace GeriDonusum2
             {
                 _context.Dispose();
             }
+
+        }
+        private void LoadPozisyonlar()
+        {
+            var pozisyonlar = _context.Pozisyonlar.ToList();
+            foreach (var pozisyon in pozisyonlar)
+            {
+                cmb_pozisyon.Items.Add(pozisyon.pozisyon_adi);
+            }
+        }
+
+        private void LoadSirketAdlari()
+        {
+            var sirketler = _context.Sirketler.ToList();
+
+            foreach (var sirket in sirketler)
+            {
+                cmb_sirketadi.Items.Add(sirket.sirket_adi);
+            }
         }
 
         private void FrmSirketKayit_Load(object sender, EventArgs e)
         {
+            LoadPozisyonlar();
+            LoadSirketAdlari();
+        }
 
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrmGiris fr = new FrmGiris();
+            fr.Show();
+            this.Hide();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmSirketGiris fr = new FrmSirketGiris();
+            fr.Show();
+            this.Hide();
         }
     }
 }

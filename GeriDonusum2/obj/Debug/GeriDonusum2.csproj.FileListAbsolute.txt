@@ -22,3 +22,4 @@ C:\Users\ardaf\Desktop\GeriDonusum2\GeriDonusum2\obj\Debug\GeriDonusum2.FrmSirke
 C:\Users\ardaf\Desktop\GeriDonusum2\GeriDonusum2\obj\Debug\GeriDonusum2.FrmSirketKayit.resources
 C:\Users\ardaf\Desktop\GeriDonusum2\GeriDonusum2\obj\Debug\GeriDonusum2.Migrations.InitialCreate1.resources
 C:\Users\ardaf\Desktop\GeriDonusum2\GeriDonusum2\obj\Debug\GeriDonusum2.FrmYoneticiRapor.resources
+C:\Users\ardaf\Desktop\GeriDonusum2\GeriDonusum2\obj\Debug\GeriDonusum2.Migrations.AddPozisyonTable.resources

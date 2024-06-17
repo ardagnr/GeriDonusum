@@ -13,11 +13,11 @@ namespace GeriDonusum2
 {
     public partial class FrmYoneticiRapor : Form
     {
-        private GeriDonusumContext _context;
+        private GeriDonusumDbContext _context;
         public FrmYoneticiRapor()
         {
             InitializeComponent();
-            _context = new GeriDonusumContext();
+            _context = new GeriDonusumDbContext();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -67,7 +67,6 @@ namespace GeriDonusum2
         {
             string sehirAdi = cmb_sehir.Text.Trim();
             string ilceAdi = cmb_ilce.Text.Trim();
-
             var query = from ku in _context.Kullanicilar_urunler
                         join k in _context.Kullanicilar on ku.kullanici_id equals k.kullanici_id
                         join u in _context.Urunler on ku.urun_id equals u.urun_id
@@ -139,6 +138,74 @@ namespace GeriDonusum2
         private void FrmYoneticiRapor_Load(object sender, EventArgs e)
         {
             Atiklar();
+            Urungetir();
+        }
+        
+        private void Urungetir()
+        {
+            cmb_sehir.Items.Clear();
+
+            var sehirler = _context.Sehirler.Select(s => s.sehir_adi).Distinct().ToList();
+            foreach (var sehir in sehirler)
+            {
+                if (!cmb_sehir.Items.Contains(sehir))
+                {
+                    cmb_sehir.Items.Add(sehir);
+                }
+            }
+            cmb_ilce.Items.Clear();
+
+            var ilceler = _context.Ilce.Select(i => i.ilce_adi).Distinct().ToList();
+            foreach (var ilce in ilceler)
+            {
+ 
+                if (!cmb_ilce.Items.Contains(ilce))
+                {
+                    cmb_ilce.Items.Add(ilce);
+                }
+            }
+        }
+        private void YeniMerkez()
+        {
+            string sehirAdi = txt_sehir.Text.Trim();
+            string ilceAdi = txt_ilce.Text.Trim();
+
+            var existingSehir = _context.Sehirler.FirstOrDefault(s => s.sehir_adi == sehirAdi);
+            if (existingSehir == null)
+            {
+                var yeniSehir = new Sehirlers { sehir_adi = sehirAdi };
+                _context.Sehirler.Add(yeniSehir);
+                _context.SaveChanges();
+            }
+            var existingIlce = _context.Ilce.FirstOrDefault(i => i.ilce_adi == ilceAdi);
+            if (existingIlce == null)
+            {
+ 
+                var yeniIlce = new Ilces { ilce_adi = ilceAdi };
+                _context.Ilce.Add(yeniIlce);
+                _context.SaveChanges();
+            }
+            MessageBox.Show("Yeni Geri Dönüşüm Merkezi Eklendi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            YeniMerkez();
+            Urungetir();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FrmGiris fr = new FrmGiris();
+            fr.Show();
+            this.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FrmSirketGiris fr = new FrmSirketGiris();
+            fr.Show();
+            this.Hide();
         }
     }
 }

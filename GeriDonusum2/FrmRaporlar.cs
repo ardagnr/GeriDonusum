@@ -13,11 +13,11 @@ namespace GeriDonusum2
 {
     public partial class FrmRaporlar : Form
     {
-        private GeriDonusumContext _context;
+        private GeriDonusumDbContext _context;
         public FrmRaporlar()
         {
             InitializeComponent();
-            _context = new GeriDonusumContext();
+            _context = new GeriDonusumDbContext();
         }
         public int kullanicid;
         private void FrmRaporlar_Load(object sender, EventArgs e)
@@ -69,6 +69,21 @@ namespace GeriDonusum2
                 }
                 dataGridView2.DataSource = dt2;
             
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrmGiris fr = new FrmGiris();
+            fr.Show();
+            this.Hide();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmAtıkBilgileri fr = new FrmAtıkBilgileri();
+            fr.Show();
+            this.Hide();
 
         }
     }

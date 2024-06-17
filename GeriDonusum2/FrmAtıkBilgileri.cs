@@ -10,11 +10,11 @@ namespace GeriDonusum2
 {
     public partial class FrmAtıkBilgileri : Form
     {
-        private GeriDonusumContext _context;
+        private GeriDonusumDbContext _context;
         public FrmAtıkBilgileri()
         {
             InitializeComponent();
-            _context = new GeriDonusumContext();
+            _context = new GeriDonusumDbContext();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -29,6 +29,22 @@ namespace GeriDonusum2
 
         private void FrmAtıkBilgileri_Load(object sender, EventArgs e)
         {
+            var urunler = _context.Urunler.Select(u => u.urun_turu).ToList();
+            foreach (var urun in urunler)
+            {
+                cmb_tür.Items.Add(urun);
+            }
+            var sehirler = _context.Sehirler.Select(s => s.sehir_adi).ToList();
+            foreach (var sehir in sehirler)
+            {
+                cmb_sehir.Items.Add(sehir);
+            }
+
+            var ilceler = _context.Ilce.Select(i => i.ilce_adi).ToList();
+            foreach (var ilce in ilceler)
+            {
+                cmb_ilce.Items.Add(ilce);
+            }
 
         }
 
@@ -73,6 +89,20 @@ namespace GeriDonusum2
                     MessageBox.Show("Lütfen geçerli bilgiler girin.");
                 }
             
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrmGiris fr = new FrmGiris();
+            fr.Show();
+            this.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FrmKullaniciGiris fr = new FrmKullaniciGiris();
+            fr.Show();
+            this.Hide();
         }
     }
 }

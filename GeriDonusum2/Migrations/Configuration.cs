@@ -5,14 +5,14 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<GeriDonusum2.Models.GeriDonusumContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<GeriDonusum2.Models.GeriDonusumDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(GeriDonusum2.Models.GeriDonusumContext context)
+        protected override void Seed(GeriDonusum2.Models.GeriDonusumDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

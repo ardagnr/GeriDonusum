@@ -8,12 +8,12 @@ namespace GeriDonusum2
 {
     public partial class FrmKullaniciGiris : Form
     {
-        private GeriDonusumContext _context;
+        private GeriDonusumDbContext _context;
 
         public FrmKullaniciGiris()
         {
             InitializeComponent();
-            _context = new GeriDonusumContext();
+            _context = new GeriDonusumDbContext();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -46,6 +46,20 @@ namespace GeriDonusum2
         private void FrmKullaniciGiris_FormClosing(object sender, FormClosingEventArgs e)
         {
             _context.Dispose();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrmGiris fr = new FrmGiris();
+            fr.Show();
+            this.Hide();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmGiris fr = new FrmGiris();
+            fr.Show();
+            this.Hide();
         }
     }
 }

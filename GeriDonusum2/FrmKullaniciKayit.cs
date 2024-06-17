@@ -7,12 +7,12 @@ namespace GeriDonusum2
 {
     public partial class FrmKullaniciKayit : Form
     {
-        private GeriDonusumContext _context;
+        private GeriDonusumDbContext _context;
 
         public FrmKullaniciKayit()
         {
             InitializeComponent();
-            _context = new GeriDonusumContext();
+            _context = new GeriDonusumDbContext();
         }
         private void FrmKullaniciKayit_Load (object sender, EventArgs e)
         {
@@ -55,6 +55,20 @@ namespace GeriDonusum2
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrmGiris fr = new FrmGiris();
+            fr.Show();
+            this.Hide();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmKullaniciGiris fr = new FrmKullaniciGiris();
+            fr.Show();
+            this.Hide();
         }
     }
 }
